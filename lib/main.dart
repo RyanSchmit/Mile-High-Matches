@@ -6,13 +6,45 @@ void main() {
 
 class Myapp extends StatelessWidget {
   const Myapp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red)),
       title: "Mile High Matches",
-      home: const MyHomePage(),
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.airplanemode_on)),
+                Tab(icon: Icon(Icons.message_rounded)),
+                Tab(icon: Icon(Icons.person)),
+              ],
+            ),
+          ),
+          body: const Views(),
+        ),
+      ),
+    );
+  }
+}
+
+class Views extends StatelessWidget {
+  const Views({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: TabBarView(
+        children: [
+          MyHomePage(),
+          Text("Messages"),
+          Text("Profile"),
+        ],
+      ),
     );
   }
 }
@@ -23,9 +55,6 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Mile High Matches"),
-      ),
       body: const Column(children: [MyTitle(), SubTitle(), Airplane()]),
     );
   }
