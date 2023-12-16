@@ -41,8 +41,8 @@ class Views extends StatelessWidget {
       body: TabBarView(
         children: [
           MyHomePage(),
-          Text("Messages"),
-          Text("Profile"),
+          MessagesPage(),
+          ProfilePage(),
         ],
       ),
     );
@@ -54,8 +54,9 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Column(children: [MyTitle(), SubTitle(), Airplane()]),
+    return const Scaffold(
+      body:
+          Center(child: Column(children: [MyTitle(), SubTitle(), Airplane()])),
     );
   }
 }
@@ -94,5 +95,49 @@ class Airplane extends StatelessWidget {
       color: Colors.blue,
       size: 100,
     );
+  }
+}
+
+class MessagesPage extends StatelessWidget {
+  const MessagesPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+        child: Column(children: [
+          Text("Messages", style: TextStyle(fontSize: 60)),
+          MessageRow(),
+          MessageRow(),
+          MessageRow(),
+          MessageRow(),
+          MessageRow()
+    ]));
+  }
+}
+
+class MessageRow extends StatelessWidget {
+  const MessageRow({super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(children: [
+      Text("Bob:   ", style: TextStyle(fontSize: 30)),
+      Text("Hi", style: TextStyle(fontSize: 25))]);
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Column(children: [
+        Image.asset('assets/images/profilePhoto.png'),
+        const Text("Ryan Schmitt", style: TextStyle(fontSize: 60)),
+        const Text("Bio:", style: TextStyle(fontSize: 20)),
+        const Text("I love to fly and meet new people", style: TextStyle(fontSize: 25))
+    ]));
   }
 }
