@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:milehighmatch/pages/discover.dart';
 import 'package:milehighmatch/pages/home.dart';
 import 'package:milehighmatch/pages/messages.dart';
 import 'package:milehighmatch/pages/profile.dart';
@@ -43,7 +44,7 @@ class Views extends StatelessWidget {
     return const Scaffold(
       body: TabBarView(
         children: [
-          MyHomePage(),
+          DiscoverPage(),
           MessagesPage(),
           ProfilePage(),
         ],
