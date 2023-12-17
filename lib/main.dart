@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:milehighmatch/pages/home.dart';
+import 'package:milehighmatch/pages/messages.dart';
+import 'package:milehighmatch/pages/profile.dart';
 
 void main() {
   runApp(const Myapp());
@@ -46,98 +49,5 @@ class Views extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body:
-          Center(child: Column(children: [MyTitle(), SubTitle(), Airplane()])),
-    );
-  }
-}
-
-class MyTitle extends StatelessWidget {
-  const MyTitle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      "Mile High Matches",
-      style: TextStyle(fontSize: 60),
-    );
-  }
-}
-
-class SubTitle extends StatelessWidget {
-  const SubTitle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      "Find love before you fly",
-      style: TextStyle(fontSize: 25),
-    );
-  }
-}
-
-class Airplane extends StatelessWidget {
-  const Airplane({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Icon(
-      Icons.airplane_ticket,
-      color: Colors.blue,
-      size: 100,
-    );
-  }
-}
-
-class MessagesPage extends StatelessWidget {
-  const MessagesPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-        child: Column(children: [
-          Text("Messages", style: TextStyle(fontSize: 60)),
-          MessageRow(),
-          MessageRow(),
-          MessageRow(),
-          MessageRow(),
-          MessageRow()
-    ]));
-  }
-}
-
-class MessageRow extends StatelessWidget {
-  const MessageRow({super.key});
-
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(children: [
-      Text("Bob:   ", style: TextStyle(fontSize: 30)),
-      Text("Hi", style: TextStyle(fontSize: 25))]);
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Column(children: [
-        Image.asset('assets/images/profilePhoto.png'),
-        const Text("Ryan Schmitt", style: TextStyle(fontSize: 60)),
-        const Text("Bio:", style: TextStyle(fontSize: 20)),
-        const Text("I love to fly and meet new people", style: TextStyle(fontSize: 25))
-    ]));
   }
 }
