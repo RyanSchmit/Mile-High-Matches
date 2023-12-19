@@ -24,12 +24,14 @@ class MatchCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.only(top: 20),
           child: Image.asset('assets/images/discover.png')),
       Container(
           decoration:
-              const BoxDecoration(color: Color.fromRGBO(126, 146, 120, 0)),
-          child: const MatchInfo())
+              const BoxDecoration(color: Color.fromRGBO(255, 255, 255, 1)),
+              height: 70.0,
+              width: 340.0,
+              child: const MatchInfo())
     ]);
   }
 }
@@ -41,8 +43,8 @@ class MatchInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Row(children: [
       Column(children: [
-        Padding(padding: EdgeInsets.only(right: 190.0, left: 55.0), child: Text("Roma")),
-        Padding(padding: EdgeInsets.only(right: 190.0, left: 55.0), child: Text("Gate 5"))
+        Padding(padding: EdgeInsets.only(left: 10.0, right: 200.0), child: Text("Roma")),
+        Padding(padding: EdgeInsets.only(left: 10.0, right: 200.0), child: Text("Gate 5"))
       ]),
       Column(children: [
         Text("Till Boarding"),

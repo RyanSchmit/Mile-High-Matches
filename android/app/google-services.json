@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "827064976353",
+    "project_id": "mile-high-matches",
+    "storage_bucket": "mile-high-matches.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827064976353:android:5598691a3b9fc8003588a0",
+        "android_client_info": {
+          "package_name": "com.example.milehighmatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtPEQaevBoKMwF8OPrmGKkDxflicXdHZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
