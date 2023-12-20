@@ -2,19 +2,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milehighmatch/pages/home.dart';
 
-class LoginPage extends StatefulWidget {
-  final VoidCallback showRegisterPage;
-  const LoginPage({super.key, required this.showRegisterPage});
+class RegisterPage extends StatefulWidget {
+  final VoidCallback showLoginPage;
+  const RegisterPage({super.key, required this.showLoginPage});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future signIn() async {
+  Future signUp() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim());
@@ -56,14 +56,14 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: () {
-                signIn();
+                signUp();
               },
-              child: const Text('Login'),
+              child: const Text('Register'),
             ),
             Column(
               children: [
-                const Text("Not a member?"),
-                GestureDetector(onTap: () => widget.showRegisterPage(), child: const Text("Register now", style: TextStyle(color: Colors.blue)))
+                const Text("Already a member?"),
+                GestureDetector(onTap: () => widget.showLoginPage(), child: const Text("Login", style: TextStyle(color: Colors.blue)))
               ],
             )
           ],
@@ -72,3 +72,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+

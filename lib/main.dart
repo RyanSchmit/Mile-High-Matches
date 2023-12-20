@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:milehighmatch/pages/auth.dart';
 import 'package:milehighmatch/pages/discover.dart';
-import 'package:milehighmatch/pages/login.dart';
 import 'package:milehighmatch/pages/messages.dart';
 import 'package:milehighmatch/pages/profile.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,7 +34,7 @@ class Myapp extends StatelessWidget {
                   if (snapshot.hasData) {
                     return const Views();
                   } else {
-                    return const LoginPage();
+                    return const AuthPage();
                   }
                 }))
     );
