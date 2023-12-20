@@ -1,5 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:milehighmatch/pages/home.dart';
+import 'package:milehighmatch/pages/discover.dart';
 import 'package:milehighmatch/pages/login.dart';
 import 'package:milehighmatch/pages/messages.dart';
 import 'package:milehighmatch/pages/profile.dart';
@@ -7,11 +8,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  runApp(const Myapp());
-
+  WidgetsFlutterBinding.ensureInitialized();
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
+  runApp(const Myapp());
 }
 
 class Myapp extends StatelessWidget {
@@ -25,19 +28,15 @@ class Myapp extends StatelessWidget {
       title: "Mile High Matches",
       home: DefaultTabController(
         length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: const TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.airplanemode_on)),
-                Tab(icon: Icon(Icons.message_rounded)),
-                Tab(icon: Icon(Icons.person)),
-              ],
-            ),
-          ),
-          body: const Views(),
-        ),
-      ),
+        child: StreamBuilder<User?>(
+                stream: FirebaseAuth.instance.authStateChanges(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return const Views();
+                  } else {
+                    return const LoginPage();
+                  }
+                }))
     );
   }
 }
@@ -47,10 +46,17 @@ class Views extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: TabBarView(
+    return Scaffold(
+      appBar: AppBar(
+        bottom: const TabBar(tabs: [
+          Tab(icon: Icon(Icons.airplanemode_on)),
+          Tab(icon: Icon(Icons.message_rounded)),
+          Tab(icon: Icon(Icons.person))
+        ]),
+      ),
+      body: const TabBarView(
         children: [
-          LoginPage(),
+          DiscoverPage(),
           MessagesPage(),
           ProfilePage(),
         ],

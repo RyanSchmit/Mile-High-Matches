@@ -1,4 +1,8 @@
+import 'dart:ui';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:milehighmatch/pages/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,17 +15,31 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim());
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
+      // Change to linear gradient
+      backgroundColor: const Color.fromRGBO(255, 115, 115, 1),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const MyTitle(),
+            const Airplane(),
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(
@@ -39,17 +57,11 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: () {
-                // Implement your login logic here
-                String email = _emailController.text;
-                String password = _passwordController.text;
-
-                // Validate email and password, and perform authentication
-
-                // For now, let's just print the entered credentials
-                print('Email: $email\nPassword: $password');
+                signIn();
               },
               child: const Text('Login'),
             ),
+            // Add Sign Up buttton
           ],
         ),
       ),
