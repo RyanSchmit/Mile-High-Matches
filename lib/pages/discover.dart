@@ -14,31 +14,26 @@ class _DiscoverPageState extends State<DiscoverPage> {
   MatchEngine? _matchEngine;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final List<String> _names = [
-    "Red",
-    "Blue",
-    "Green",
-    "Yellow",
-    "Orange",
-    "Grey",
-    "Purple",
-    "Pink"
+    "Jen",
+    "Jill",
+    "Isla",
+    "Yiu",
+    "Tres"
   ];
-  final List<Color> _colors = [
-    Colors.red,
-    Colors.blue,
-    Colors.green,
-    Colors.yellow,
-    Colors.orange,
-    Colors.grey,
-    Colors.purple,
-    Colors.pink
+
+  final List<Image> _images = [
+    Image.asset("assets/images/discover0.png"),
+    Image.asset("assets/images/discover0.png"),
+    Image.asset("assets/images/discover0.png"),
+    Image.asset("assets/images/discover0.png"),
+    Image.asset("assets/images/discover0.png"),
   ];
 
   @override
   void initState() {
     for (int i = 0; i < _names.length; i++) {
       _swipeItems.add(SwipeItem(
-          content: Content(text: _names[i], color: _colors[i]),
+          content: MatchCard(text: _names[i], image: _images[i]),
           likeAction: () {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Liked ${_names[i]}"),
@@ -70,10 +65,10 @@ class _DiscoverPageState extends State<DiscoverPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        body:  Stack(children: [
+        body: Stack(children: [
           Center(
             child: SizedBox(
-              height: 550,
+              height: 500,
               width: 300,
               child: SwipeCards(
                 matchEngine: _matchEngine!,
@@ -81,18 +76,18 @@ class _DiscoverPageState extends State<DiscoverPage> {
                   // Match Card here?
                   return Container(
                     alignment: Alignment.center,
-                    color: _swipeItems[index].content.color,
-                    child: Text(
-                      _swipeItems[index].content.text,
-                      style: const TextStyle(fontSize: 100),
-                    ),
+                    color: Colors.blue,
+                    child: Column(children:[ 
+                      _swipeItems[index].content.image,
+                      Text(_swipeItems[index].content.text, 
+                      style: const TextStyle(fontSize: 35, color: Colors.white))]),
                   );
                 },
                 onStackFinished: () {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text("No more possible matches found."),
-                  duration: Duration(milliseconds: 500),
-                ));
+                    content: Text("No more possible matches found."),
+                    duration: Duration(milliseconds: 500),
+                  ));
                 },
                 itemChanged: (SwipeItem item, int index) {
                   print("item: ${item.content.text}, index: $index");
@@ -152,9 +147,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
   }
 }
 
-class Content {
+class MatchCard {
   final String? text;
-  final Color? color;
+  final Image? image;
 
-  Content({this.text, this.color});
+  MatchCard({this.text, this.image});
 }

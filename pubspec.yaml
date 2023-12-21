@@ -65,7 +65,7 @@ flutter:
   assets:
     - assets/images/profilePhoto.png
     - assets/images/match.png
-    - assets/images/discover.png
+    - assets/images/discover0.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
