@@ -40,17 +40,33 @@ class _LoginPageState extends State<LoginPage> {
             const MyTitle(),
             const Airplane(),
             TextField(
+              cursorColor: Colors.blue,
               controller: _emailController,
               decoration: const InputDecoration(
+                enabledBorder: UnderlineInputBorder(      
+                      borderSide: BorderSide(color: Colors.black),   
+                      ),  
+              focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                   ), 
                 labelText: 'Email',
+                labelStyle: TextStyle(color: Colors.black)
               ),
             ),
             const SizedBox(height: 16.0),
             TextField(
+              cursorColor: Colors.blue,
               controller: _passwordController,
               obscureText: true,
               decoration: const InputDecoration(
+                enabledBorder: UnderlineInputBorder(      
+                      borderSide: BorderSide(color: Colors.black),   
+                      ),  
+              focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                   ), 
                 labelText: 'Password',
+                labelStyle: TextStyle(color: Colors.black)
               ),
             ),
             const SizedBox(height: 32.0),
