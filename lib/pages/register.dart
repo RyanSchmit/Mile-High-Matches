@@ -30,30 +30,56 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Change to linear gradient
       backgroundColor: const Color.fromRGBO(255, 115, 115, 1),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 6.0, bottom: 6.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const MyTitle(),
-            const Airplane(),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
+            const Text("Sign Up", style: TextStyle(fontSize: 24)),
+            const SizedBox(height: 10),
+            const Text("Register with your info below", style: TextStyle(fontSize: 20)),
+            const SizedBox(height: 50),
+
+
+            // Input info
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                border: Border.all(color: Colors.white)
+              ),
+              child: TextField(
+                    cursorColor: Colors.black,
+                    controller: _emailController,
+                    decoration: InputDecoration( 
+                    border: OutlineInputBorder(),
+                    labelText: "Email",
+                    labelStyle: TextStyle(color: Colors.black)
+                  ),
               ),
             ),
-            const SizedBox(height: 16.0),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'Password',
+
+
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                border: Border.all(color: Colors.white)
+              ),
+              child: TextField(
+                    // Make a show password boolean
+                    obscureText: true,
+                    cursorColor: Colors.black,
+                    controller: _passwordController,
+                    decoration: InputDecoration( 
+                    border: OutlineInputBorder(),
+                    labelText: "Password",
+                    labelStyle: TextStyle(color: Colors.black)
+                  ),
               ),
             ),
             const SizedBox(height: 32.0),
+
+            // Sign up button
             ElevatedButton(
               onPressed: () {
                 signUp();
@@ -72,4 +98,3 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
-
