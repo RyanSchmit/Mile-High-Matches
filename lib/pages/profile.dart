@@ -11,6 +11,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final user = FirebaseAuth.instance.currentUser!;
 
+  // look for document that has the same id as the current users uid
+
   @override
   Widget build(BuildContext context) {
     return Center(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,16 +14,35 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
 
   Future signUp() async {
-    // Check if the confirm password and password are same
-    // Else show error (reference swipable method)
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim());
+    if (_confirmPasswordController.text.trim() ==
+        _passwordController.text.trim()) {
+      String? docId = "";
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim())
+          .then((snapShot) => docId = snapShot.user?.uid);
+
+      // Add user data
+      addUserData(docId, _nameController.text.trim(),
+          _bioController.text.trim(), _genderController.text.trim());
+    }
+  }
+
+  Future addUserData(
+      String? docID, String name, String bio, String gender) async {
+        // Is it unsafe to do this?
+    await FirebaseFirestore.instance.collection('profiles').doc(docID).set({
+      'name': name,
+      'bio': bio,
+      'gender': gender,
+    });
   }
 
   @override
@@ -115,7 +135,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             const SizedBox(height: 32.0),
-
 
             // Change to buttons for male, female of non-binary
             Container(
