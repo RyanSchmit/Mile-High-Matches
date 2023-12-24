@@ -32,7 +32,7 @@ class Myapp extends StatelessWidget {
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return const Views();
+                    return Views();
                   } else {
                     return const AuthPage();
                   }
@@ -54,7 +54,7 @@ class Views extends StatelessWidget {
           Tab(icon: Icon(Icons.person))
         ]),
       ),
-      body: const TabBarView(
+      body: TabBarView(
         children: [
           DiscoverPage(),
           MessagesPage(),

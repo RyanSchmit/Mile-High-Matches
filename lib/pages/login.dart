@@ -43,15 +43,14 @@ class _LoginPageState extends State<LoginPage> {
               cursorColor: Colors.blue,
               controller: _emailController,
               decoration: const InputDecoration(
-                enabledBorder: UnderlineInputBorder(      
-                      borderSide: BorderSide(color: Colors.black),   
-                      ),  
-              focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                   ), 
-                labelText: 'Email',
-                labelStyle: TextStyle(color: Colors.black)
-              ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Colors.black)),
             ),
             const SizedBox(height: 16.0),
             TextField(
@@ -59,15 +58,14 @@ class _LoginPageState extends State<LoginPage> {
               controller: _passwordController,
               obscureText: true,
               decoration: const InputDecoration(
-                enabledBorder: UnderlineInputBorder(      
-                      borderSide: BorderSide(color: Colors.black),   
-                      ),  
-              focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                   ), 
-                labelText: 'Password',
-                labelStyle: TextStyle(color: Colors.black)
-              ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
+                  labelText: 'Password',
+                  labelStyle: TextStyle(color: Colors.black)),
             ),
             const SizedBox(height: 32.0),
             ElevatedButton(
@@ -79,7 +77,10 @@ class _LoginPageState extends State<LoginPage> {
             Column(
               children: [
                 const Text("Not a member?"),
-                GestureDetector(onTap: () => widget.showRegisterPage(), child: const Text("Register now", style: TextStyle(color: Colors.blue)))
+                GestureDetector(
+                    onTap: () => widget.showRegisterPage(),
+                    child: const Text("Register now",
+                        style: TextStyle(color: Colors.blue)))
               ],
             )
           ],
