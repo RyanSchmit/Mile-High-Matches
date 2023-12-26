@@ -9,11 +9,11 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   runApp(const Myapp());
 }
 
@@ -23,12 +23,12 @@ class Myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red)),
-      title: "Mile High Matches",
-      home: DefaultTabController(
-        length: 3,
-        child: StreamBuilder<User?>(
+        theme: ThemeData(
+            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red)),
+        title: "Mile High Matches",
+        home: DefaultTabController(
+            length: 3,
+            child: StreamBuilder<User?>(
                 stream: FirebaseAuth.instance.authStateChanges(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -36,8 +36,7 @@ class Myapp extends StatelessWidget {
                   } else {
                     return const AuthPage();
                   }
-                }))
-    );
+                })));
   }
 }
 
@@ -46,20 +45,37 @@ class Views extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = new AppBar(
+      // Remove shadow
+      shape: const LinearBorder(),
+      bottom: const TabBar(tabs: [
+        Padding(
+          padding: EdgeInsets.only(bottom: 40.0),
+          child: Tab(icon: Icon(Icons.airplanemode_on, size: 45.0)),
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 40.0),
+          child: Tab(icon: Icon(Icons.message_rounded, size: 45.0))
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 40.0),
+          child: Tab(icon: Icon(Icons.person, size: 45.0))
+        ),
+      ]),
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        bottom: const TabBar(tabs: [
-          Tab(icon: Icon(Icons.airplanemode_on)),
-          Tab(icon: Icon(Icons.message_rounded)),
-          Tab(icon: Icon(Icons.person))
-        ]),
-      ),
       body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           DiscoverPage(),
           MessagesPage(),
           ProfilePage(),
         ],
+      ),
+      bottomNavigationBar: new SizedBox(
+        height: appBar.preferredSize.height,
+        child: appBar,
       ),
     );
   }

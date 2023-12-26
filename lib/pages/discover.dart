@@ -65,85 +65,88 @@ class _DiscoverPageState extends State<DiscoverPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        body: Stack(children: [
-          Center(
-            child: SizedBox(
-              height: 500,
-              width: 300,
-              child: SwipeCards(
-                matchEngine: _matchEngine!,
-                itemBuilder: (BuildContext context, int index) {
-                  // Match Card here?
-                  return Container(
-                    alignment: Alignment.center,
-                    color: Colors.blue,
-                    child: Column(children:[ 
-                      _swipeItems[index].content.image,
-                      Text(_swipeItems[index].content.text, 
-                      style: const TextStyle(fontSize: 35, color: Colors.white))]),
-                  );
-                },
-                onStackFinished: () {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("No more possible matches found."),
-                    duration: Duration(milliseconds: 500),
-                  ));
-                },
-                itemChanged: (SwipeItem item, int index) {
-                  print("item: ${item.content.text}, index: $index");
-                },
-                leftSwipeAllowed: true,
-                rightSwipeAllowed: true,
-                upSwipeAllowed: true,
-                fillSpace: true,
-                likeTag: Container(
-                  margin: const EdgeInsets.all(15.0),
-                  padding: const EdgeInsets.all(3.0),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.green)),
-                  child: const Text('Like'),
-                ),
-                nopeTag: Container(
-                  margin: const EdgeInsets.all(15.0),
-                  padding: const EdgeInsets.all(3.0),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.red)),
-                  child: const Text('Nope'),
-                ),
-                superLikeTag: Container(
-                  margin: const EdgeInsets.all(15.0),
-                  padding: const EdgeInsets.all(3.0),
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.orange)),
-                  child: const Text('Super Like'),
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 65.0),
+          child: Stack(children: [
+            Center(
+              child: SizedBox(
+                height: 500,
+                width: 300,
+                child: SwipeCards(
+                  matchEngine: _matchEngine!,
+                  itemBuilder: (BuildContext context, int index) {
+                    // Match Card here?
+                    return Container(
+                      alignment: Alignment.center,
+                      color: Colors.blue,
+                      child: Column(children:[ 
+                        _swipeItems[index].content.image,
+                        Text(_swipeItems[index].content.text, 
+                        style: const TextStyle(fontSize: 35, color: Colors.white))]),
+                    );
+                  },
+                  onStackFinished: () {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("No more possible matches found."),
+                      duration: Duration(milliseconds: 500),
+                    ));
+                  },
+                  itemChanged: (SwipeItem item, int index) {
+                    print("item: ${item.content.text}, index: $index");
+                  },
+                  leftSwipeAllowed: true,
+                  rightSwipeAllowed: true,
+                  upSwipeAllowed: true,
+                  fillSpace: true,
+                  likeTag: Container(
+                    margin: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(3.0),
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.green)),
+                    child: const Text('Like'),
+                  ),
+                  nopeTag: Container(
+                    margin: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(3.0),
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.red)),
+                    child: const Text('Nope'),
+                  ),
+                  superLikeTag: Container(
+                    margin: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(3.0),
+                    decoration:
+                        BoxDecoration(border: Border.all(color: Colors.orange)),
+                    child: const Text('Super Like'),
+                  ),
                 ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      _matchEngine!.currentItem?.nope();
-                    },
-                    child: const Text("Nope")),
-                ElevatedButton(
-                    onPressed: () {
-                      _matchEngine!.currentItem?.superLike();
-                    },
-                    child: const Text("Superlike")),
-                ElevatedButton(
-                    onPressed: () {
-                      _matchEngine!.currentItem?.like();
-                    },
-                    child: const Text("Like"))
-              ],
-            ),
-          )
-        ]));
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        _matchEngine!.currentItem?.nope();
+                      },
+                      child: const Text("Nope")),
+                  ElevatedButton(
+                      onPressed: () {
+                        _matchEngine!.currentItem?.superLike();
+                      },
+                      child: const Text("Superlike")),
+                  ElevatedButton(
+                      onPressed: () {
+                        _matchEngine!.currentItem?.like();
+                      },
+                      child: const Text("Like"))
+                ],
+              ),
+            )
+          ]),
+        ));
   }
 }
 

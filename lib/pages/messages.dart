@@ -11,21 +11,24 @@ class _MessagesPageState extends State<MessagesPage> {
   @override
   Widget build(BuildContext context) {
     // Make infinite scroll possible
-    return Column(
-      children: [
-        Text("New Matches", style: TextStyle(fontSize: 40)),
-        Row(children: [
-          NewMatch(name: "Ava"),
-          NewMatch(name: "Licy"),
-          NewMatch(name: "Mae"),
-          NewMatch(name: "Sonny"),
-          NewMatch(name: "Anna"),
-        ],),
-        Text("Messages", style: TextStyle(fontSize: 40)),
-        MessageRow(name: 'Jonna', messageBody: 'hiii'),
-        MessageRow(name: 'Diane', messageBody: 'hello'),
-        // MessageRow(name: 'Youm', messageBody: 'How are you doing?'),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 60.0),
+      child: Column(
+        children: [
+          Text("New Matches", style: TextStyle(fontSize: 40)),
+          Row(children: [
+            NewMatch(name: "Ava"),
+            NewMatch(name: "Licy"),
+            NewMatch(name: "Mae"),
+            NewMatch(name: "Sonny"),
+            NewMatch(name: "Anna"),
+          ],),
+          Text("Messages", style: TextStyle(fontSize: 40)),
+          MessageRow(name: 'Jonna', messageBody: 'hiii'),
+          MessageRow(name: 'Diane', messageBody: 'hello'),
+          // MessageRow(name: 'Youm', messageBody: 'How are you doing?'),
+        ],
+      ),
     );
   }
 }
