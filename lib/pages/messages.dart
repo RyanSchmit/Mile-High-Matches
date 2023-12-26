@@ -24,7 +24,7 @@ class _MessagesPageState extends State<MessagesPage> {
         Text("Messages", style: TextStyle(fontSize: 40)),
         MessageRow(name: 'Jonna', messageBody: 'hiii'),
         MessageRow(name: 'Diane', messageBody: 'hello'),
-        MessageRow(name: 'Youm', messageBody: 'How are you doing?'),
+        // MessageRow(name: 'Youm', messageBody: 'How are you doing?'),
       ],
     );
   }
@@ -49,7 +49,8 @@ class MessageRow extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(right: 15.0, left: 7.0),
                   child: Text(name + ": ", style: TextStyle(fontSize: 30))),
-              Text(messageBody, style: TextStyle(fontSize: 25))
+              Text(messageBody, style: TextStyle(fontSize: 25),
+              overflow: TextOverflow.ellipsis)
             ],
           )),
         ),

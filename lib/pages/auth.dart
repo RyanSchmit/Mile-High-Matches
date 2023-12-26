@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:milehighmatch/pages/info.dart';
 import 'package:milehighmatch/pages/login.dart';
 import 'package:milehighmatch/pages/register.dart';
 
@@ -23,7 +24,7 @@ class _AuthPageState extends State<AuthPage> {
     if (showLoginPage) {
       return LoginPage(showRegisterPage: toggleScreens);
     } else {
-      return RegisterPage(showLoginPage: toggleScreens);
+      return InfoPage();
     }
   }
 }
