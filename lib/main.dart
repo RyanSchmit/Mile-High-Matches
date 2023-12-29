@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milehighmatch/pages/auth.dart';
 import 'package:milehighmatch/pages/discover.dart';
+import 'package:milehighmatch/pages/info.dart';
 import 'package:milehighmatch/pages/messages.dart';
 import 'package:milehighmatch/pages/profile.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,29 +16,49 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const Myapp());
+  runApp(MyApp());
 }
 
-class Myapp extends StatelessWidget {
-  const Myapp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
   Widget build(BuildContext context) {
+    // WidgetsBinding.instance.addPostFrameCallback((_) => setState(main));
+    Future checkUserStatus() async {
+      final user = FirebaseAuth.instance.currentUser!;
+      if (user == null) {
+        return null;
+      } else {
+        var userDoc =
+            FirebaseFirestore.instance.collection("profiles").doc(user.uid);
+        return await userDoc.get().then((snapshot) => snapshot.exists);
+      }
+    }
+
     return MaterialApp(
         theme: ThemeData(
             colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red)),
         title: "Mile High Matches",
         home: DefaultTabController(
             length: 3,
-            child: StreamBuilder<User?>(
-                stream: FirebaseAuth.instance.authStateChanges(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Views();
-                  } else {
-                    return const AuthPage();
-                  }
-                })));
+            child: FutureBuilder(
+              future: checkUserStatus(),
+              builder: (context, snapshot) {
+                if (snapshot.data == null) {
+                  return AuthPage();
+                } else if (snapshot.data == true) {
+                  return Views();
+                } else {
+                  return InfoPage();
+                }
+              },
+            )));
   }
 }
 
@@ -54,13 +76,11 @@ class Views extends StatelessWidget {
           child: Tab(icon: Icon(Icons.airplanemode_on, size: 45.0)),
         ),
         Padding(
-          padding: EdgeInsets.only(bottom: 40.0),
-          child: Tab(icon: Icon(Icons.message_rounded, size: 45.0))
-        ),
+            padding: EdgeInsets.only(bottom: 40.0),
+            child: Tab(icon: Icon(Icons.message_rounded, size: 45.0))),
         Padding(
-          padding: EdgeInsets.only(bottom: 40.0),
-          child: Tab(icon: Icon(Icons.person, size: 45.0))
-        ),
+            padding: EdgeInsets.only(bottom: 40.0),
+            child: Tab(icon: Icon(Icons.person, size: 45.0))),
       ]),
     );
 

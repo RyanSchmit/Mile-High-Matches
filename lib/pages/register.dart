@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:milehighmatch/pages/info.dart';
+import 'package:milehighmatch/main.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -19,10 +19,9 @@ class _RegisterPageState extends State<RegisterPage> {
   Future signUp() async {
     if (_confirmPasswordController.text.trim() ==
         _passwordController.text.trim()) {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim());
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
     }
   }
 
@@ -107,8 +106,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 // Sign up button
                 ElevatedButton(
-                  onPressed: () {
-                    signUp();
+                  onPressed: () async {
+                    await signUp();
+                    setState(() {
+                      main();
+                    });
                   },
                   child: const Text('Register'),
                 ),

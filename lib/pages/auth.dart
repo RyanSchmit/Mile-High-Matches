@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:milehighmatch/pages/info.dart';
 import 'package:milehighmatch/pages/login.dart';
 import 'package:milehighmatch/pages/register.dart';
 

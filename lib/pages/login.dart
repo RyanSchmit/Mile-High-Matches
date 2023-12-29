@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:milehighmatch/main.dart';
 import 'package:milehighmatch/pages/home.dart';
 
 class LoginPage extends StatefulWidget {
@@ -69,8 +70,11 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 32.0),
             ElevatedButton(
-              onPressed: () {
-                signIn();
+              onPressed: () async {
+                await signIn();
+                setState(() {
+                  main();
+                });
               },
               child: const Text('Login'),
             ),

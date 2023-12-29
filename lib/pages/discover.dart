@@ -18,7 +18,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
     "Jill",
     "Isla",
     "Yiu",
-    "Tres"
+    "Tes"
   ];
 
   final List<Image> _images = [

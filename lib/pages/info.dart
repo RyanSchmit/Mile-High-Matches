@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:milehighmatch/main.dart';
 
 class InfoPage extends StatefulWidget {
   const InfoPage({super.key});
@@ -13,7 +14,7 @@ class _InfoPageState extends State<InfoPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _genderController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
-  
+
   final user = FirebaseAuth.instance.currentUser!;
 
   Future addUserData() async {
@@ -96,8 +97,11 @@ class _InfoPageState extends State<InfoPage> {
 
                 // Sign up button
                 ElevatedButton(
-                  onPressed: () {
-                    addUserData();
+                  onPressed: () async {
+                    await addUserData();
+                    setState(() {
+                      main();
+                    });
                   },
                   child: const Text('Complete Registration'),
                 ),

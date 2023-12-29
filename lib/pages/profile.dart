@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:milehighmatch/main.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -26,34 +27,42 @@ class _ProfilePageState extends State<ProfilePage> {
           child: FutureBuilder(
               future: getUserInfo(),
               builder: (context, snapshot) {
-                return Column(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Image.asset('assets/images/profilePhoto.png')),
-                    const Text("About", style: TextStyle(fontSize: 60)),
-                    const Text("Full Name:",
-                        style: TextStyle(fontSize: 20, color: Colors.grey)),
-                    Text(snapshot.data['name'],
-                        style: TextStyle(fontSize: 25, color: Colors.black)),
-                    const Text("Bio:",
-                        style: TextStyle(fontSize: 20, color: Colors.grey)),
-                    Text(snapshot.data['bio'],
-                        style: TextStyle(fontSize: 25, color: Colors.black)),
-                    const Text("Email:",
-                        style: TextStyle(fontSize: 20, color: Colors.grey)),
-                    Text(user.email!,
-                        style:
-                            const TextStyle(fontSize: 25, color: Colors.black)),
-                    MaterialButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                      },
-                      color: Colors.lightGreen,
-                      child: const Text("Sign out"),
-                    )
-                  ],
-                );
+                if (snapshot.hasData) {
+                  return Column(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Image.asset('assets/images/profilePhoto.png')),
+                      const Text("About", style: TextStyle(fontSize: 60)),
+                      const Text("Full Name:",
+                          style: TextStyle(fontSize: 20, color: Colors.grey)),
+                      Text(snapshot.data['name'],
+                          style: TextStyle(fontSize: 25, color: Colors.black)),
+                      const Text("Bio:",
+                          style: TextStyle(fontSize: 20, color: Colors.grey)),
+                      Text(snapshot.data['bio'],
+                          style: TextStyle(fontSize: 25, color: Colors.black)),
+                      const Text("Email:",
+                          style: TextStyle(fontSize: 20, color: Colors.grey)),
+                      Text(user.email!,
+                          style: const TextStyle(
+                              fontSize: 25, color: Colors.black)),
+                      MaterialButton(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          setState(() {
+                            main();
+                          });
+                        },
+                        color: Colors.lightGreen,
+                        child: const Text("Sign out"),
+                      )
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                }
+                return Center(child: CircularProgressIndicator());
               })),
     );
   }
