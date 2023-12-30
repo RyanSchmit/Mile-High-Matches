@@ -30,64 +30,70 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // Change to linear gradient
-      backgroundColor: const Color.fromRGBO(255, 115, 115, 1),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const MyTitle(),
-            const Airplane(),
-            TextField(
-              cursorColor: Colors.blue,
-              controller: _emailController,
-              decoration: const InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  labelText: 'Email',
-                  labelStyle: TextStyle(color: Colors.black)),
-            ),
-            const SizedBox(height: 16.0),
-            TextField(
-              cursorColor: Colors.blue,
-              controller: _passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
-                  labelText: 'Password',
-                  labelStyle: TextStyle(color: Colors.black)),
-            ),
-            const SizedBox(height: 32.0),
-            ElevatedButton(
-              onPressed: () async {
-                await signIn();
-                setState(() {
-                  main();
-                });
-              },
-              child: const Text('Login'),
-            ),
-            Column(
+    return SingleChildScrollView(
+      child: SizedBox(
+        height: 1010,
+        width: 1000,
+        child: Scaffold(
+          // Change to linear gradient
+          backgroundColor: const Color.fromRGBO(255, 115, 115, 1),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Not a member?"),
-                GestureDetector(
-                    onTap: () => widget.showRegisterPage(),
-                    child: const Text("Register now",
-                        style: TextStyle(color: Colors.blue)))
+                const MyTitle(),
+                const Airplane(),
+                TextField(
+                  cursorColor: Colors.blue,
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.black)),
+                ),
+                const SizedBox(height: 16.0),
+                TextField(
+                  cursorColor: Colors.blue,
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.black)),
+                ),
+                const SizedBox(height: 32.0),
+                ElevatedButton(
+                  onPressed: () async {
+                    await signIn();
+                    setState(() {
+                      main();
+                    });
+                  },
+                  child: const Text('Login'),
+                ),
+                Column(
+                  children: [
+                    const Text("Not a member?"),
+                    GestureDetector(
+                        onTap: () => widget.showRegisterPage(),
+                        child: const Text("Register now",
+                            style: TextStyle(color: Colors.blue)))
+                  ],
+                )
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );
