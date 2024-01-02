@@ -16,7 +16,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -66,7 +66,7 @@ class Views extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appBar = new AppBar(
+    final appBar = AppBar(
       // Remove shadow
       shape: const LinearBorder(),
       bottom: const TabBar(tabs: [
@@ -84,15 +84,15 @@ class Views extends StatelessWidget {
     );
 
     return Scaffold(
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
+      body: const TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         children: [
           DiscoverPage(),
           MessagesPage(),
           ProfilePage(),
         ],
       ),
-      bottomNavigationBar: new SizedBox(
+      bottomNavigationBar: SizedBox(
         height: appBar.preferredSize.height,
         child: appBar,
       ),

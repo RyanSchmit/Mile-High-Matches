@@ -46,7 +46,7 @@ class MessageRow extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const ChatPage(name: "John",)),
+        MaterialPageRoute(builder: (context) => ChatPage(name: name)),
       ),
       child: Container(
         decoration: BoxDecoration(border: Border.all(color: Colors.black)),
@@ -56,10 +56,10 @@ class MessageRow extends StatelessWidget {
             children: [
               Image.asset('assets/images/match.png'),
               Padding(
-                  padding: EdgeInsets.only(right: 15.0, left: 7.0),
-                  child: Text(name + ": ", style: TextStyle(fontSize: 30))),
+                  padding: const EdgeInsets.only(right: 15.0, left: 7.0),
+                  child: Text("$name: ", style: const TextStyle(fontSize: 30))),
               Text(messageBody,
-                  style: TextStyle(fontSize: 25),
+                  style: const TextStyle(fontSize: 25),
                   overflow: TextOverflow.ellipsis)
             ],
           )),
