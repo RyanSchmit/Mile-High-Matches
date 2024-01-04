@@ -36,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         height: 1010,
         width: 1000,
         child: Scaffold(
@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: TextField(
                     cursorColor: Colors.black,
                     controller: _emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Email",
                         labelStyle: TextStyle(color: Colors.black)),
@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     obscureText: true,
                     cursorColor: Colors.black,
                     controller: _passwordController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Password",
                         labelStyle: TextStyle(color: Colors.black)),
@@ -96,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     obscureText: true,
                     cursorColor: Colors.black,
                     controller: _confirmPasswordController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Confirm Password",
                         labelStyle: TextStyle(color: Colors.black)),

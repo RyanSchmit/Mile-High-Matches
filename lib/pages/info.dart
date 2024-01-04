@@ -29,7 +29,7 @@ class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
+      child: SizedBox(
         height: 1000,
         width: 1000,
         child: Scaffold(
@@ -54,7 +54,7 @@ class _InfoPageState extends State<InfoPage> {
                   child: TextField(
                     cursorColor: Colors.black,
                     controller: _nameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Name",
                         labelStyle: TextStyle(color: Colors.black)),
@@ -70,7 +70,7 @@ class _InfoPageState extends State<InfoPage> {
                   child: TextField(
                     cursorColor: Colors.black,
                     controller: _genderController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Gender",
                         labelStyle: TextStyle(color: Colors.black)),
@@ -87,7 +87,7 @@ class _InfoPageState extends State<InfoPage> {
                   child: TextField(
                     cursorColor: Colors.black,
                     controller: _bioController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Bio",
                         labelStyle: TextStyle(color: Colors.black)),

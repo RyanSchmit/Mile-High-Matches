@@ -37,11 +37,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       const Text("Full Name:",
                           style: TextStyle(fontSize: 20, color: Colors.white)),
                       Text(snapshot.data['name'],
-                          style: TextStyle(fontSize: 25, color: Colors.black)),
+                          style: const TextStyle(fontSize: 25, color: Colors.black)),
                       const Text("Bio:",
                           style: TextStyle(fontSize: 20, color: Colors.white)),
                       Text(snapshot.data['bio'],
-                          style: TextStyle(fontSize: 25, color: Colors.black)),
+                          style: const TextStyle(fontSize: 25, color: Colors.black)),
                       const Text("Email:",
                           style: TextStyle(fontSize: 20, color: Colors.white)),
                       Text(user.email!,
@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 } else if (snapshot.hasError) {
                   return Center(child: Text(snapshot.error.toString()));
                 }
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               })),
     );
   }

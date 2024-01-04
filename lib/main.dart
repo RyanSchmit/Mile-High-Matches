@@ -50,11 +50,11 @@ class _MyAppState extends State<MyApp> {
               future: checkUserStatus(),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
-                  return AuthPage();
+                  return const AuthPage();
                 } else if (snapshot.data == true) {
-                  return Views();
+                  return const Views();
                 } else {
-                  return InfoPage();
+                  return const InfoPage();
                 }
               },
             )));

@@ -16,10 +16,11 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SizedBox(
-        height: 1000,
+        height: 1010,
         width: 1000,
         child: Scaffold(
           appBar: AppBar(
+            title: Text(widget.name),
             leading: BackButton(
               onPressed: () => Navigator.push(
                 context,
@@ -28,12 +29,28 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
           backgroundColor: Colors.blue,
-          body: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(widget.name, style: const TextStyle(color: Colors.white, fontSize: 25),),
-              const SizedBox(height: 50),
-            ],
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 16.0),
+                TextField(
+                  cursorColor: Colors.blue,
+                  controller: _messageController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      labelText: 'Password',
+                      labelStyle: TextStyle(color: Colors.black)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
