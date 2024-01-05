@@ -73,18 +73,16 @@ class _InfoPageState extends State<InfoPage> {
                 const SizedBox(height: 32.0),
 
                 // Bio
+                const Align(alignment: Alignment.topLeft, child: Text("Bio: ")),
                 Container(
-                  // Make bigger
+                  height: 250,
                   decoration: BoxDecoration(
                       color: Colors.grey[200],
                       border: Border.all(color: Colors.white)),
                   child: TextField(
                     cursorColor: Colors.black,
                     controller: _bioController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Bio",
-                        labelStyle: TextStyle(color: Colors.black)),
+                    maxLines: 10,
                   ),
                 ),
                 const SizedBox(height: 32.0),
