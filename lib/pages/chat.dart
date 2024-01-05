@@ -24,6 +24,18 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
+  Future getMessagesToData() async {
+    var messagesToArray =
+        FirebaseFirestore.instance.collection("messages").doc(user.uid);
+    return await messagesToArray.get().then((snapshot) => snapshot.data());
+  }
+
+  Future getMessagesFromData() async {
+    var messagesFromArray =
+        FirebaseFirestore.instance.collection("messages").doc(user.uid);
+    return await messagesFromArray.get().then((snapshot) => snapshot.data());
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -46,10 +58,10 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
           backgroundColor: const Color.fromARGB(221, 55, 55, 55),
-          body: const SentMessage(messageBody: "Hello", received: false),
+          body: const SentMessage(messageBody: "How are you?", received: false),
           bottomNavigationBar: Padding(
             padding:
-                const EdgeInsets.only(bottom: 210.0, left: 16.0, right: 16.0),
+                const EdgeInsets.only(bottom: 140.0, left: 16.0, right: 16.0),
             child: Row(
               children: [
                 Expanded(
@@ -90,20 +102,24 @@ class SentMessage extends StatelessWidget {
   const SentMessage(
       {super.key, required this.messageBody, required this.received});
 
+  @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomRight,
-      child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.blue,
-          borderRadius: BorderRadius.all(
-            Radius.circular(15.0),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0, right: 12.0, left: 12.0),
+      child: Align(
+        alignment: received ? Alignment.bottomLeft : Alignment.bottomRight,
+        child: Container(
+          decoration: BoxDecoration(
+            color: received ? Colors.grey : Colors.blue,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(15.0),
+            ),
           ),
-        ),
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        child: Text(
-          messageBody,
-          style: const TextStyle(fontSize: 24, color: Colors.white),
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+          child: Text(
+            messageBody,
+            style: const TextStyle(fontSize: 20, color: Colors.white),
+          ),
         ),
       ),
     );

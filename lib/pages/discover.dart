@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
@@ -10,15 +11,28 @@ class DiscoverPage extends StatefulWidget {
 }
 
 class _DiscoverPageState extends State<DiscoverPage> {
+  Future getPossibleMatches() async {
+    var profiles = FirebaseFirestore.instance.collection("profiles");
+    return await profiles.get().then((snapshot) => snapshot);
+  }
+
   final List<SwipeItem> _swipeItems = <SwipeItem>[];
   MatchEngine? _matchEngine;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   final List<String> _names = [
     "Jen",
     "Jill",
-    "Isla",
-    "Yiu",
-    "Tes"
+    "Dona",
+    "Rachael",
+    "Palmer"
+  ];
+
+  final List<String> _bios = [
+    "I like to fly.",
+    "I want to travel.",
+    "When I are we going on a trip",
+    "Where is your favorite trip?",
+    "I love to travel."
   ];
 
   final List<Image> _images = [
@@ -33,7 +47,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
   void initState() {
     for (int i = 0; i < _names.length; i++) {
       _swipeItems.add(SwipeItem(
-          content: MatchCard(text: _names[i], image: _images[i]),
+          content: MatchCard(name: _names[i], bio: _bios[i], image: _images[i]),
           likeAction: () {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text("Liked ${_names[i]}"),
@@ -70,19 +84,23 @@ class _DiscoverPageState extends State<DiscoverPage> {
           child: Stack(children: [
             Center(
               child: SizedBox(
-                height: 500,
+                height: 550,
                 width: 300,
                 child: SwipeCards(
                   matchEngine: _matchEngine!,
                   itemBuilder: (BuildContext context, int index) {
-                    // Match Card here?
                     return Container(
                       alignment: Alignment.center,
                       color: Colors.blue,
-                      child: Column(children:[ 
+                      child: Column(children: [
                         _swipeItems[index].content.image,
-                        Text(_swipeItems[index].content.text, 
-                        style: const TextStyle(fontSize: 35, color: Colors.white))]),
+                        Text(_swipeItems[index].content.name,
+                            style: const TextStyle(
+                                fontSize: 35, color: Colors.white)),
+                        Text(_swipeItems[index].content.bio,
+                            style: const TextStyle(
+                                fontSize: 20, color: Colors.white)),
+                      ]),
                     );
                   },
                   onStackFinished: () {
@@ -92,7 +110,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                     ));
                   },
                   itemChanged: (SwipeItem item, int index) {
-                    print("item: ${item.content.text}, index: $index");
+                    print("item: ${item.content.name}, index: $index");
                   },
                   leftSwipeAllowed: true,
                   rightSwipeAllowed: true,
@@ -151,8 +169,9 @@ class _DiscoverPageState extends State<DiscoverPage> {
 }
 
 class MatchCard {
-  final String? text;
+  final String? name;
+  final String? bio;
   final Image? image;
 
-  MatchCard({this.text, this.image});
+  MatchCard({this.name, this.bio, this.image});
 }

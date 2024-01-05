@@ -78,7 +78,16 @@ class NewMatch extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
-        children: [Image.asset('assets/images/match.png'), Text(name)],
+        children: [
+          GestureDetector(
+            child: Image.asset('assets/images/match.png'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ChatPage(name: name)),
+            ),
+          ),
+          Text(name)
+        ],
       ),
     );
   }

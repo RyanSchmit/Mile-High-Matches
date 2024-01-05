@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:milehighmatch/main.dart';
 import 'package:milehighmatch/pages/info.dart';
 
 class RegisterPage extends StatefulWidget {
