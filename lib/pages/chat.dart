@@ -38,56 +38,72 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: SizedBox(
-        height: 1010,
-        width: 1000,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Column(
-              children: [
-                Image.asset('assets/images/match.png', scale: 2.0),
-                Text(widget.name),
-              ],
-            ),
-            leading: BackButton(
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MyApp()),
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          height: 1010,
+          width: 1000,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Column(
+                children: [
+                  Image.asset('assets/images/match.png', scale: 2.0),
+                  Text(widget.name),
+                ],
+              ),
+              leading: BackButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyApp()),
+                ),
               ),
             ),
-          ),
-          backgroundColor: const Color.fromARGB(221, 55, 55, 55),
-          body: const SentMessage(messageBody: "How are you?", received: false),
-          bottomNavigationBar: Padding(
-            padding:
-                const EdgeInsets.only(bottom: 140.0, left: 16.0, right: 16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    cursorColor: Colors.blue,
-                    controller: _messageController,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        labelText: 'Type Message',
-                        labelStyle: TextStyle(color: Colors.white)),
+            backgroundColor: const Color.fromARGB(221, 55, 55, 55),
+            body: const Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(top: 400.0),
+                child: Column(
+                  children: [
+                    SentMessage(messageBody: "How are you?", received: false),
+                    SentMessage(messageBody: "Good, how are u?", received: true),
+                    SentMessage(
+                        messageBody: "Great, what are u up to?", received: false),
+                  ],
+                ),
+              ),
+            ),
+            bottomNavigationBar: Padding(
+              padding:
+                  const EdgeInsets.only(bottom: 140.0, left: 16.0, right: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      cursorColor: Colors.blue,
+                      controller: _messageController,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          labelText: 'Type Message',
+                          labelStyle: TextStyle(color: Colors.white)),
+                    ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await addMessageData();
-                    _messageController.text = "";
-                  },
-                  child: const Text('Send'),
-                ),
-              ],
+                  ElevatedButton(
+                    onPressed: () async {
+                      await addMessageData();
+                      _messageController.text = "";
+                    },
+                    child: const Text('Send'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -105,7 +121,8 @@ class SentMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.0, right: 12.0, left: 12.0),
+      padding: const EdgeInsets.only(
+          bottom: 12.0, right: 12.0, left: 12.0, top: 25.0),
       child: Align(
         alignment: received ? Alignment.bottomLeft : Alignment.bottomRight,
         child: Container(
