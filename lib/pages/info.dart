@@ -63,18 +63,12 @@ class _InfoPageState extends State<InfoPage> {
                 const SizedBox(height: 32.0),
 
                 // Gender
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white)),
-                  child: TextField(
-                    cursorColor: Colors.black,
-                    controller: _genderController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Gender",
-                        labelStyle: TextStyle(color: Colors.black)),
-                  ),
+                Column(
+                  children: [
+                    const Align(
+                        alignment: Alignment.topLeft, child: Text("Gender: ")),
+                    GenderButtons(controller: _genderController),
+                  ],
                 ),
                 const SizedBox(height: 32.0),
 
@@ -98,10 +92,12 @@ class _InfoPageState extends State<InfoPage> {
                 // Sign up button
                 ElevatedButton(
                   onPressed: () async {
-                    await addUserData();
-                    setState(() {
-                      main();
-                    });
+                    await addUserData().then(
+                      (value) => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyApp()),
+                      ),
+                    );
                   },
                   child: const Text('Complete Registration'),
                 ),
@@ -110,6 +106,100 @@ class _InfoPageState extends State<InfoPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class GenderButtons extends StatefulWidget {
+  final TextEditingController controller;
+
+  const GenderButtons({super.key, required this.controller});
+
+  @override
+  State<GenderButtons> createState() => _GenderButtonsState();
+}
+
+class _GenderButtonsState extends State<GenderButtons> {
+  bool selectedMale = false;
+  bool selectedFemale = false;
+  bool selectedOther = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        // Male
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: ElevatedButton(
+            onPressed: () {
+              widget.controller.text = "Male";
+              selectedMale = true;
+              selectedFemale = false;
+              selectedOther = false;
+              setState(() {
+                GenderButtons;
+              });
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: selectedMale ? Colors.red : Colors.white),
+            child: Text(
+              "Male",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: selectedMale ? Colors.white : Colors.red),
+            ),
+          ),
+        ),
+
+        // Female
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: ElevatedButton(
+            onPressed: () {
+              widget.controller.text = "Female";
+              selectedFemale = true;
+              selectedMale = false;
+              selectedOther = false;
+              setState(() {
+                GenderButtons;
+              });
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: selectedFemale ? Colors.red : Colors.white),
+            child: Text(
+              "Female",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: selectedFemale ? Colors.white : Colors.red),
+            ),
+          ),
+        ),
+
+        // Other
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: ElevatedButton(
+            onPressed: () {
+              widget.controller.text = "Other";
+              selectedOther = true;
+              selectedMale = false;
+              selectedFemale = false;
+              setState(() {
+                GenderButtons;
+              });
+            },
+            style: ElevatedButton.styleFrom(
+                backgroundColor: selectedOther ? Colors.red : Colors.white),
+            child: Text(
+              "Other",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: selectedOther ? Colors.white : Colors.red),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milehighmatch/main.dart';
+import 'package:milehighmatch/pages/auth.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -37,11 +38,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       const Text("Full Name:",
                           style: TextStyle(fontSize: 20, color: Colors.white)),
                       Text(snapshot.data['name'],
-                          style: const TextStyle(fontSize: 25, color: Colors.black)),
+                          style: const TextStyle(
+                              fontSize: 25, color: Colors.black)),
                       const Text("Bio:",
                           style: TextStyle(fontSize: 20, color: Colors.white)),
                       Text(snapshot.data['bio'],
-                          style: const TextStyle(fontSize: 25, color: Colors.black)),
+                          style: const TextStyle(
+                              fontSize: 25, color: Colors.black)),
                       const Text("Email:",
                           style: TextStyle(fontSize: 20, color: Colors.white)),
                       Text(user.email!,
@@ -49,10 +52,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontSize: 25, color: Colors.black)),
                       MaterialButton(
                         onPressed: () async {
-                          await FirebaseAuth.instance.signOut();
-                          setState(() {
-                            main();
-                          });
+                          await FirebaseAuth.instance.signOut().then(
+                                (value) => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AuthPage()),
+                                ),
+                              );
                         },
                         color: Colors.lightGreen,
                         child: const Text("Sign out"),

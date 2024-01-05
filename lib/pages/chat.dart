@@ -20,7 +20,12 @@ class _ChatPageState extends State<ChatPage> {
         width: 1000,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(widget.name),
+            title: Column(
+              children: [
+                Image.asset('assets/images/match.png', scale: 2.0,),
+                Text(widget.name),
+              ],
+            ),
             leading: BackButton(
               onPressed: () => Navigator.push(
                 context,
@@ -28,26 +33,30 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
           ),
-          backgroundColor: Colors.blue,
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+          backgroundColor: const Color.fromARGB(221, 55, 55, 55),
+          bottomNavigationBar: Padding(
+            padding: const EdgeInsets.only(bottom: 210.0, left: 16.0, right: 16.0),
+            child: Row(
               children: [
-                const SizedBox(height: 16.0),
-                TextField(
-                  cursorColor: Colors.blue,
-                  controller: _messageController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      labelText: 'Password',
-                      labelStyle: TextStyle(color: Colors.black)),
+                Expanded(
+                  child: TextField(
+                    cursorColor: Colors.blue,
+                    controller: _messageController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white),
+                        ),
+                        labelText: 'Type Message',
+                        labelStyle: TextStyle(color: Colors.white)),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () => print("hello"),
+                  child: const Text('Send'),
                 ),
               ],
             ),

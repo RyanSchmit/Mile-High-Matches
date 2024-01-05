@@ -42,6 +42,7 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
         theme: ThemeData(
+            // Change to const Color.fromRGBO(255, 115, 115, 1)
             colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red)),
         title: "Mile High Matches",
         home: DefaultTabController(

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milehighmatch/main.dart';
+import 'package:milehighmatch/pages/info.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -107,10 +108,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 // Sign up button
                 ElevatedButton(
                   onPressed: () async {
-                    await signUp();
-                    setState(() {
-                      main();
-                    });
+                    await signUp().then(
+                      (value) => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const InfoPage()),
+                      ),
+                    );
                   },
                   child: const Text('Register'),
                 ),

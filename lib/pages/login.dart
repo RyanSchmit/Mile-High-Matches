@@ -35,7 +35,6 @@ class _LoginPageState extends State<LoginPage> {
         height: 1010,
         width: 1000,
         child: Scaffold(
-          // Change to linear gradient
           backgroundColor: const Color.fromRGBO(255, 115, 115, 1),
           body: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -75,10 +74,12 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 32.0),
                 ElevatedButton(
                   onPressed: () async {
-                    await signIn();
-                    setState(() {
-                      main();
-                    });
+                    await signIn().then(
+                      (value) => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyApp()),
+                      ),
+                    );
                   },
                   child: const Text('Login'),
                 ),
