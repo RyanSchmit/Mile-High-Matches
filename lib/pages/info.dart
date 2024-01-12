@@ -18,7 +18,6 @@ class _InfoPageState extends State<InfoPage> {
   final user = FirebaseAuth.instance.currentUser!;
 
   Future addUserData() async {
-    // Is it unsafe to do this?
     await FirebaseFirestore.instance.collection('profiles').doc(user.uid).set({
       'name': _nameController.text.trim(),
       'bio': _bioController.text.trim(),

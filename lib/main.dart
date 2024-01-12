@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:milehighmatch/pages/auth.dart';
 import 'package:milehighmatch/pages/discover.dart';
 import 'package:milehighmatch/pages/info.dart';
-import 'package:milehighmatch/pages/messages.dart';
+import 'package:milehighmatch/pages/matches_page.dart';
 import 'package:milehighmatch/pages/profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -89,7 +89,7 @@ class Views extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         children: [
           DiscoverPage(),
-          MessagesPage(),
+          MatchesPage(),
           ProfilePage(),
         ],
       ),

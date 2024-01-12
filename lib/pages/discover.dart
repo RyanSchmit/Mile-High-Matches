@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
@@ -11,21 +10,12 @@ class DiscoverPage extends StatefulWidget {
 }
 
 class _DiscoverPageState extends State<DiscoverPage> {
-  Future getPossibleMatches() async {
-    var profiles = FirebaseFirestore.instance.collection("profiles");
-    return await profiles.get().then((snapshot) => snapshot);
-  }
 
   final List<SwipeItem> _swipeItems = <SwipeItem>[];
   MatchEngine? _matchEngine;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  final List<String> _names = [
-    "Jen",
-    "Jill",
-    "Dona",
-    "Rachael",
-    "Palmer"
-  ];
+
+  final List<String> _names = ["Jen", "Jill", "Dona", "Rachael", "Palmer"];
 
   final List<String> _bios = [
     "I like to fly.",

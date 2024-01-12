@@ -1,11 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milehighmatch/main.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:milehighmatch/pages/chat_service.dart';
 
 class ChatPage extends StatefulWidget {
   final String name;
-  const ChatPage({super.key, required this.name});
+  final String receiverUserId;
+  const ChatPage({super.key, required this.name, required this.receiverUserId});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -13,33 +14,23 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
+  final ChatService _chatService = ChatService();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  final user = FirebaseAuth.instance.currentUser!;
-
-  Future addMessageData() async {
-    // Is it unsafe to do this?
-    await FirebaseFirestore.instance.collection('messages').doc(user.uid).set({
-      'messagesFrom': [_messageController.text.trim()],
-      'messagesTo': []
-    });
-  }
-
-  Future getMessagesToData() async {
-    var messagesToArray =
-        FirebaseFirestore.instance.collection("messages").doc(user.uid);
-    return await messagesToArray.get().then((snapshot) => snapshot.data());
-  }
-
-  Future getMessagesFromData() async {
-    var messagesFromArray =
-        FirebaseFirestore.instance.collection("messages").doc(user.uid);
-    return await messagesFromArray.get().then((snapshot) => snapshot.data());
+  void sendMessage() async {
+    // Only calls send message if there is text to send
+    if (_messageController.text.isNotEmpty) {
+      await _chatService.sendMessage(
+          widget.receiverUserId, _messageController.text);
+      _messageController.clear();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: SingleChildScrollView(
         child: SizedBox(
           height: 1010,
@@ -67,9 +58,11 @@ class _ChatPageState extends State<ChatPage> {
                 child: Column(
                   children: [
                     SentMessage(messageBody: "How are you?", received: false),
-                    SentMessage(messageBody: "Good, how are u?", received: true),
                     SentMessage(
-                        messageBody: "Great, what are u up to?", received: false),
+                        messageBody: "Good, how are u?", received: true),
+                    SentMessage(
+                        messageBody: "Great, what are u up to?",
+                        received: false),
                   ],
                 ),
               ),
@@ -96,9 +89,8 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () async {
-                      await addMessageData();
-                      _messageController.text = "";
+                    onPressed: () {
+                      sendMessage();
                     },
                     child: const Text('Send'),
                   ),
