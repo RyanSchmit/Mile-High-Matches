@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milehighmatch/main.dart';
@@ -16,6 +17,38 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  Widget _buildSentMessagesItem(DocumentSnapshot document) {
+    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+
+    var alignment = (data['senderId'] != _firebaseAuth.currentUser!.uid);
+
+    return SentMessage(
+      messageBody: data['messageBody'],
+      received: alignment,
+    );
+  }
+
+  Widget _buildSentMessagesList() {
+    return StreamBuilder(
+        stream: _chatService.getMessages(
+            widget.receiverUserId, _firebaseAuth.currentUser!.uid),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error:${snapshot.error}');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Text("Loading..");
+          }
+
+          return ListView(
+            children: snapshot.data!.docs
+                .map((document) => _buildSentMessagesItem(document))
+                .toList(),
+          );
+        });
+  }
 
   void sendMessage() async {
     // Only calls send message if there is text to send
@@ -51,19 +84,12 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
             backgroundColor: const Color.fromARGB(221, 55, 55, 55),
-            body: const Align(
+            body: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: EdgeInsets.only(top: 400.0),
+                padding: const EdgeInsets.only(top: 400.0),
                 child: Column(
-                  children: [
-                    SentMessage(messageBody: "How are you?", received: false),
-                    SentMessage(
-                        messageBody: "Good, how are u?", received: true),
-                    SentMessage(
-                        messageBody: "Great, what are u up to?",
-                        received: false),
-                  ],
+                  children: [Expanded(child: _buildSentMessagesList())],
                 ),
               ),
             ),
