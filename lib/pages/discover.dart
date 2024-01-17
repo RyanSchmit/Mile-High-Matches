@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
@@ -10,10 +11,23 @@ class DiscoverPage extends StatefulWidget {
 }
 
 class _DiscoverPageState extends State<DiscoverPage> {
-
   final List<SwipeItem> _swipeItems = <SwipeItem>[];
   MatchEngine? _matchEngine;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Stream<QuerySnapshot> getPossibleMatches(String userId, String otherUserId) {
+    List<String> ids = [userId, otherUserId];
+    ids.sort();
+    String chatId = ids.join("_");
+
+    return _firestore
+        .collection('chat')
+        .doc(chatId)
+        .collection('messages')
+        .orderBy('timestamp', descending: false)
+        .snapshots();
+  }
 
   final List<String> _names = ["Jen", "Jill", "Dona", "Rachael", "Palmer"];
 
@@ -26,11 +40,11 @@ class _DiscoverPageState extends State<DiscoverPage> {
   ];
 
   final List<Image> _images = [
-    Image.asset("assets/images/discover0.png"),
-    Image.asset("assets/images/discover0.png"),
-    Image.asset("assets/images/discover0.png"),
-    Image.asset("assets/images/discover0.png"),
-    Image.asset("assets/images/discover0.png"),
+    Image.asset("assets/images/discover0.jpg"),
+    Image.asset("assets/images/discover1.png"),
+    Image.asset("assets/images/discover2.png"),
+    Image.asset("assets/images/discover3.png"),
+    Image.asset("assets/images/discover4.jpg"),
   ];
 
   @override

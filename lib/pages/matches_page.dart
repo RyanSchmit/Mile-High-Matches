@@ -28,8 +28,7 @@ class _MatchesPageState extends State<MatchesPage> {
           ),
           Text("Messages", style: TextStyle(fontSize: 40)),
           MessageRow(name: 'Jonna', messageBody: 'hiii'),
-          MessageRow(name: 'Diane', messageBody: 'hello'),
-          // MessageRow(name: 'Youm', messageBody: 'How are you doing?'),
+          MessageRow(name: 'Diane', messageBody: 'hello')
         ],
       ),
     );
@@ -83,7 +82,7 @@ class NewMatch extends StatelessWidget {
             child: Image.asset('assets/images/match.png'),
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ChatPage(name: name, receiverUserId: '8Q7xFHTNOJfmVZGfTdR7gZNWBQt2',)),
+              MaterialPageRoute(builder: (context) => ChatPage(name: name, receiverUserId: 'iqiOw4JOMTOJz6XDc7RuoH538ND3=[======]',)),
             ),
           ),
           Text(name)
