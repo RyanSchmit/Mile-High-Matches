@@ -20,14 +20,14 @@ class _MatchesPageState extends State<MatchesPage> {
           Row(
             children: [
               NewMatch(name: "Ava"),
-              NewMatch(name: "Licy"),
+              NewMatch(name: "Lucy"),
               NewMatch(name: "Mae"),
               NewMatch(name: "Sonny"),
               NewMatch(name: "Anna"),
             ],
           ),
           Text("Messages", style: TextStyle(fontSize: 40)),
-          MessageRow(name: 'Jonna', messageBody: 'hiii'),
+          MessageRow(name: 'Janna', messageBody: 'hi'),
           MessageRow(name: 'Diane', messageBody: 'hello')
         ],
       ),

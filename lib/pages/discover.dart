@@ -11,22 +11,26 @@ class DiscoverPage extends StatefulWidget {
 }
 
 class _DiscoverPageState extends State<DiscoverPage> {
+  late Future? querySnapshot;
+
   final List<SwipeItem> _swipeItems = <SwipeItem>[];
   MatchEngine? _matchEngine;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  CollectionReference collectionRef =
+      FirebaseFirestore.instance.collection('profiles');
 
-  Stream<QuerySnapshot> getPossibleMatches(String userId, String otherUserId) {
-    List<String> ids = [userId, otherUserId];
-    ids.sort();
-    String chatId = ids.join("_");
+  final List<Image> _images = [
+    Image.asset("assets/images/discover0.jpg"),
+    Image.asset("assets/images/discover1.png"),
+    Image.asset("assets/images/discover2.png"),
+    Image.asset("assets/images/discover3.png"),
+    Image.asset("assets/images/discover4.jpg"),
+  ];
 
-    return _firestore
-        .collection('chat')
-        .doc(chatId)
-        .collection('messages')
-        .orderBy('timestamp', descending: false)
-        .snapshots();
+  Future getPossibleMatches() async {
+    QuerySnapshot querySnapshot = await collectionRef.get();
+    final data = querySnapshot.docs.map((doc) => doc.data()).toList();
+    return data;
   }
 
   final List<String> _names = ["Jen", "Jill", "Dona", "Rachael", "Palmer"];
@@ -39,136 +43,123 @@ class _DiscoverPageState extends State<DiscoverPage> {
     "I love to travel."
   ];
 
-  final List<Image> _images = [
-    Image.asset("assets/images/discover0.jpg"),
-    Image.asset("assets/images/discover1.png"),
-    Image.asset("assets/images/discover2.png"),
-    Image.asset("assets/images/discover3.png"),
-    Image.asset("assets/images/discover4.jpg"),
-  ];
-
   @override
   void initState() {
-    for (int i = 0; i < _names.length; i++) {
-      _swipeItems.add(SwipeItem(
-          content: MatchCard(name: _names[i], bio: _bios[i], image: _images[i]),
-          likeAction: () {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Liked ${_names[i]}"),
-              duration: const Duration(milliseconds: 500),
-            ));
-          },
-          nopeAction: () {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Nope ${_names[i]}"),
-              duration: const Duration(milliseconds: 500),
-            ));
-          },
-          superlikeAction: () {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text("Superliked ${_names[i]}"),
-              duration: const Duration(milliseconds: 500),
-            ));
-          },
-          onSlideUpdate: (SlideRegion? region) async {
-            print("Region $region");
-          }));
-    }
-
+    /// Here you set your querySnapshot to what you get from your database call
+    querySnapshot = getPossibleMatches();
     _matchEngine = MatchEngine(swipeItems: _swipeItems);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: _scaffoldKey,
-        body: Padding(
-          padding: const EdgeInsets.only(bottom: 65.0),
-          child: Stack(children: [
-            Center(
-              child: SizedBox(
-                height: 550,
-                width: 300,
-                child: SwipeCards(
-                  matchEngine: _matchEngine!,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      color: Colors.blue,
-                      child: Column(children: [
-                        _swipeItems[index].content.image,
-                        Text(_swipeItems[index].content.name,
-                            style: const TextStyle(
-                                fontSize: 35, color: Colors.white)),
-                        Text(_swipeItems[index].content.bio,
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.white)),
-                      ]),
-                    );
-                  },
-                  onStackFinished: () {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("No more possible matches found."),
-                      duration: Duration(milliseconds: 500),
-                    ));
-                  },
-                  itemChanged: (SwipeItem item, int index) {
-                    print("item: ${item.content.name}, index: $index");
-                  },
-                  leftSwipeAllowed: true,
-                  rightSwipeAllowed: true,
-                  upSwipeAllowed: true,
-                  fillSpace: true,
-                  likeTag: Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.green)),
-                    child: const Text('Like'),
-                  ),
-                  nopeTag: Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.red)),
-                    child: const Text('Nope'),
-                  ),
-                  superLikeTag: Container(
-                    margin: const EdgeInsets.all(15.0),
-                    padding: const EdgeInsets.all(3.0),
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.orange)),
-                    child: const Text('Super Like'),
-                  ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        _matchEngine!.currentItem?.nope();
-                      },
-                      child: const Text("Nope")),
-                  ElevatedButton(
-                      onPressed: () {
-                        _matchEngine!.currentItem?.superLike();
-                      },
-                      child: const Text("Superlike")),
-                  ElevatedButton(
-                      onPressed: () {
-                        _matchEngine!.currentItem?.like();
-                      },
-                      child: const Text("Like"))
-                ],
-              ),
-            )
-          ]),
-        ));
+    return FutureBuilder(
+        future: getPossibleMatches(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print(snapshot.data[4]['name']);
+            return Padding(
+              padding: const EdgeInsets.only(top: 100.0),
+              child: Scaffold(
+                  key: _scaffoldKey,
+                  body: Padding(
+                    padding: const EdgeInsets.only(bottom: 65.0),
+                    child: Stack(children: [
+                      Center(
+                        child: SizedBox(
+                          height: 550,
+                          width: 300,
+                          child: SwipeCards(
+                            matchEngine: _matchEngine!,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                alignment: Alignment.center,
+                                color: Colors.blue,
+                                child: Column(children: [
+                                  _images[0],
+                                  Text(snapshot.data[index]['name'],
+                                      style: const TextStyle(
+                                          fontSize: 35, color: Colors.white)),
+                                  Text(snapshot.data[index]['bio'],
+                                      style: const TextStyle(
+                                          fontSize: 20, color: Colors.white)),
+                                ]),
+                              );
+                            },
+                            onStackFinished: () {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content:
+                                    Text("No more possible matches found."),
+                                duration: Duration(milliseconds: 500),
+                              ));
+                            },
+                            itemChanged: (SwipeItem item, int index) {
+                              print(
+                                  "item: ${item.content.name}, index: $index");
+                            },
+                            leftSwipeAllowed: true,
+                            rightSwipeAllowed: true,
+                            upSwipeAllowed: true,
+                            fillSpace: true,
+                            likeTag: Container(
+                              margin: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(3.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.green)),
+                              child: const Text('Like'),
+                            ),
+                            nopeTag: Container(
+                              margin: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(3.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.red)),
+                              child: const Text('Nope'),
+                            ),
+                            superLikeTag: Container(
+                              margin: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(3.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.orange)),
+                              child: const Text('Super Like'),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  _matchEngine!.currentItem?.nope();
+                                },
+                                child: const Text("Nope")),
+                            ElevatedButton(
+                                onPressed: () {
+                                  _matchEngine!.currentItem?.superLike();
+                                },
+                                child: const Text("Superlike")),
+                            ElevatedButton(
+                                onPressed: () {
+                                  _matchEngine!.currentItem?.like();
+                                },
+                                child: const Text("Like"))
+                          ],
+                        ),
+                      )
+                    ]),
+                  )),
+            );
+          } else {
+            // Future hasn't finished yet, return a placeholder
+            return const Padding(
+              padding: EdgeInsets.only(top: 500.0),
+              child: Text('Loading'),
+            );
+          }
+        });
   }
 }
 

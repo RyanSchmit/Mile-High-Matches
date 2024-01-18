@@ -87,7 +87,7 @@ class _ChatPageState extends State<ChatPage> {
             body: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.only(top: 400.0),
+                padding: const EdgeInsets.only(top: 0.0),
                 child: Column(
                   children: [Expanded(child: _buildSentMessagesList())],
                 ),
@@ -140,7 +140,7 @@ class SentMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-          bottom: 12.0, right: 12.0, left: 12.0, top: 25.0),
+          bottom: 10.0),
       child: Align(
         alignment: received ? Alignment.bottomLeft : Alignment.bottomRight,
         child: Container(
