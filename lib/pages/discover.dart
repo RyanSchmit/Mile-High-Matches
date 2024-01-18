@@ -33,16 +33,6 @@ class _DiscoverPageState extends State<DiscoverPage> {
     return data;
   }
 
-  final List<String> _names = ["Jen", "Jill", "Dona", "Rachael", "Palmer"];
-
-  final List<String> _bios = [
-    "I like to fly.",
-    "I want to travel.",
-    "When I are we going on a trip",
-    "Where is your favorite trip?",
-    "I love to travel."
-  ];
-
   @override
   void initState() {
     /// Here you set your querySnapshot to what you get from your database call
@@ -57,9 +47,36 @@ class _DiscoverPageState extends State<DiscoverPage> {
         future: getPossibleMatches(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print(snapshot.data[4]['name']);
+            for (int i = 0; i < 5; i++) {
+              _swipeItems.add(SwipeItem(
+                  content: MatchCard(
+                      name: snapshot.data[i]['name'],
+                      bio: snapshot.data[i]['bio'],
+                      image: _images[0]),
+                  likeAction: () {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Liked ${snapshot.data[i]['name']}"),
+                      duration: const Duration(milliseconds: 500),
+                    ));
+                  },
+                  nopeAction: () {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Nope ${snapshot.data[i]['name']}"),
+                      duration: const Duration(milliseconds: 500),
+                    ));
+                  },
+                  superlikeAction: () {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Superliked ${snapshot.data[i]['name']}"),
+                      duration: const Duration(milliseconds: 500),
+                    ));
+                  },
+                  onSlideUpdate: (SlideRegion? region) async {
+                    print("Region $region");
+                  }));
+            }
             return Padding(
-              padding: const EdgeInsets.only(top: 100.0),
+              padding: const EdgeInsets.only(top: 0.0),
               child: Scaffold(
                   key: _scaffoldKey,
                   body: Padding(
